@@ -401,6 +401,45 @@ class CitationOpportunityTests(unittest.TestCase):
             "I would kindly ask you to consider citing these works.",
         )
 
+    def test_grouped_context_is_bounded_without_dropping_selected_works(self):
+        second_contribution = {
+            **CONTRIBUTION,
+            "id": "mass-loss",
+            "name": "Mass-loss histories",
+            "public_url": "https://example.org/mass-loss",
+        }
+        opportunities = [
+            {
+                "opportunity_id": f"cop_{index}", "paper_id": "2609.1",
+                "contribution_id": contribution_id, "catalogue_version": "1.2",
+                "classification": "potentially_useful", "confidence": 0.8,
+                "rationale": letter * 10000,
+                "counterargument": letter.lower() * 10000,
+                "evidence": PACKET["passages"], "status": "confirmed",
+            }
+            for index, (contribution_id, letter) in enumerate(
+                (("redback", "A"), ("mass-loss", "B")), start=1
+            )
+        ]
+
+        bundle = citation_opportunities.build_import_bundle(
+            opportunities,
+            {"title": "A paper", "authors": ["A. Author"]},
+            {"redback": CONTRIBUTION, "mass-loss": second_contribution},
+        )
+        context = json.loads(bundle["candidates"][0]["context"])
+
+        self.assertLessEqual(
+            len(context["rationale"]),
+            citation_opportunities.MAX_GROUPED_CONTEXT_FIELD_CHARS,
+        )
+        self.assertLessEqual(
+            len(context["counterargument"]),
+            citation_opportunities.MAX_GROUPED_CONTEXT_FIELD_CHARS,
+        )
+        self.assertIn("Redback:", context["rationale"])
+        self.assertIn("Mass-loss histories:", context["rationale"])
+
     def test_bundle_revision_ids_change_with_drafting_instructions(self):
         opportunity = {
             "opportunity_id": "cop_1", "paper_id": "2609.1",

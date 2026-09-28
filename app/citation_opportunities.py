@@ -30,10 +30,35 @@ def arxiv_id_from_input(value: str) -> str | None:
 
 BANNED_LANGUAGE = {"citation theft", "misconduct", "should have known"}
 MAX_MANUAL_EVIDENCE_CHARS = 700
+MAX_GROUPED_CONTEXT_FIELD_CHARS = 12000
 
 
 def _normalized_evidence(text: str) -> str:
     return re.sub(r"\s+", " ", str(text)).strip().casefold()
+
+
+def _bounded_grouped_field(
+    opportunities: list[dict],
+    contributions_by_id: dict[str, dict],
+    field: str,
+) -> str:
+    """Preserve every selected work while bounding aggregate prompt context."""
+    prefixes = [
+        f"{contributions_by_id[item['contribution_id']]['name']}: "
+        for item in opportunities
+    ]
+    separator_cost = max(0, len(opportunities) - 1)
+    available = MAX_GROUPED_CONTEXT_FIELD_CHARS - sum(map(len, prefixes)) - separator_cost
+    if available < len(opportunities):
+        raise ValueError("selected contribution names exceed the grouped context limit")
+    share = available // len(opportunities)
+    sections = []
+    for prefix, opportunity in zip(prefixes, opportunities):
+        value = str(opportunity[field]).strip()
+        if len(value) > share:
+            value = value[: max(1, share - 1)].rstrip() + "…"
+        sections.append(prefix + value)
+    return "\n".join(sections)
 
 
 def _build_manual(
@@ -432,13 +457,11 @@ def build_import_bundle(
         "paper": paper_context,
         "contributions": contributions,
         "classification": strongest_classification,
-        "rationale": "\n".join(
-            f"{contributions_by_id[item['contribution_id']]['name']}: {item['rationale']}"
-            for item in opportunities
+        "rationale": _bounded_grouped_field(
+            opportunities, contributions_by_id, "rationale"
         ),
-        "counterargument": "\n".join(
-            f"{contributions_by_id[item['contribution_id']]['name']}: {item['counterargument']}"
-            for item in opportunities
+        "counterargument": _bounded_grouped_field(
+            opportunities, contributions_by_id, "counterargument"
         ),
         "evidence": _merged_evidence(opportunities, contributions_by_id),
         "citation_request": (
