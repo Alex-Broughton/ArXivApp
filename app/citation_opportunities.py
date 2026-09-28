@@ -13,6 +13,7 @@ from typing import Callable
 import requests
 
 from app import citation_opportunity_store
+from app.contribution_catalogue import normalize
 
 
 ANALYSIS_VERSION = "4"
@@ -364,6 +365,31 @@ def build_import_bundle(
 
     paper_id = opportunities[0]["paper_id"]
     tone_note = tone_note.strip()
+    normalized_note = f" {normalize(tone_note)} "
+    selected_contribution_ids = {
+        item["contribution_id"] for item in opportunities
+    }
+    mentioned_but_unselected = []
+    if tone_note:
+        for contribution_id, contribution in contributions_by_id.items():
+            if contribution_id in selected_contribution_ids:
+                continue
+            names = [contribution.get("name", ""), *contribution.get("aliases", [])]
+            if any(
+                normalized_name
+                and f" {normalized_name} " in normalized_note
+                for name in names
+                if (normalized_name := normalize(name))
+            ):
+                mentioned_but_unselected.append(
+                    contribution.get("name", contribution_id)
+                )
+    if mentioned_but_unselected:
+        raise ValueError(
+            "drafting instructions mention catalogue work(s) not included in "
+            "Relevant works: " + ", ".join(mentioned_but_unselected)
+            + ". Add them under Works and evidence before creating the email draft."
+        )
     group_id = _group_id(opportunities, tone_note)
     contributions = []
     for contribution_id in dict.fromkeys(

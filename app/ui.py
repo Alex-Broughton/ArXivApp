@@ -3555,6 +3555,10 @@ def render_citation_opportunities():
                 placeholder="For example: keep it brief; mention that I also develop Bilby",
                 key=f"citation_tone_{opportunity['paper_id']}",
             )
+            st.caption(
+                "Drafting instructions control how selected works are discussed. "
+                "To cite another publication, add it under Works and evidence first."
+            )
             can_export = any(
                 item["status"] in {"proposed", "needs_review"} for item in group
             )

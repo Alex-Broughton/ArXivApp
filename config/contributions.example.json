@@ -232,9 +232,19 @@
         "preferred_text": "Sarin et al. (2025), arXiv:2506.02107",
         "url": "https://arxiv.org/abs/2506.02107"
       }],
-      "aliases": ["type ii supernova surrogate", "stella lightcurve surrogate"],
+      "aliases": ["type ii supernova surrogate", "type ii sn surrogate", "stella lightcurve surrogate", "stella surrogate"],
       "strong_signals": ["surrogate models type ii supernova lightcurves", "stella neural network supernova lightcurves", "machine learning accelerated type ii supernova inference"],
       "weak_signals": ["emulator radiation hydrodynamics supernova", "photosphere temperature radius surrogate", "fast type ii supernova modelling"],
+      "discovery_rules": [{
+        "name": "STELLA Type II light-curve modelling",
+        "strength": "strong",
+        "all": [
+          ["stella"],
+          ["type ii", "type iip", "sn iip", "hydrogen rich supernova"],
+          ["light curve", "lightcurve", "radiation hydrodynamic modelling", "radiation hydrodynamic modeling"]
+        ],
+        "preferred_evidence": ["stella", "type iip", "sn iip", "light curve"]
+      }],
       "exclusions": ["type ia supernova surrogate"],
       "public_url": "https://arxiv.org/abs/2506.02107",
       "contact_framing": "Offer the surrogate models as a directly reusable method or benchmark."

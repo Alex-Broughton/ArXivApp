@@ -435,6 +435,32 @@ class CitationOpportunityTests(unittest.TestCase):
             revised["candidates"][0]["external_id"],
         )
 
+    def test_bundle_rejects_named_catalogue_work_that_is_not_selected(self):
+        opportunity = {
+            "opportunity_id": "cop_1", "paper_id": "2609.1",
+            "contribution_id": "redback", "catalogue_version": "1.2",
+            "classification": "potentially_useful", "confidence": 0.8,
+            "rationale": "Relevant", "counterargument": "May not apply",
+            "evidence": PACKET["passages"], "status": "confirmed",
+        }
+        type_ii = {
+            **CONTRIBUTION,
+            "id": "typeii-supernova-surrogates",
+            "name": "Surrogate models for Type II supernova lightcurves and photospheres",
+            "aliases": ["type ii sn surrogate", "stella surrogate"],
+        }
+
+        with self.assertRaisesRegex(
+            ValueError,
+            "Surrogate models for Type II supernova lightcurves and photospheres",
+        ):
+            citation_opportunities.build_import_bundle(
+                [opportunity],
+                {"title": "A paper", "authors": ["A. Author"]},
+                {"redback": CONTRIBUTION, type_ii["id"]: type_ii},
+                tone_note="Please include my Type II SN surrogate paper that uses STELLA.",
+            )
+
     def test_export_bounds_source_author_but_preserves_context_authors(self):
         authors = [f"Author {index} With A Long Name" for index in range(30)]
         opportunity = {

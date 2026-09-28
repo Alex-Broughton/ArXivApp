@@ -152,6 +152,10 @@ class CitationEvidenceTests(unittest.TestCase):
                 "at2020blt-low-efficiency-grb",
                 "This gamma-ray quiet relativistic explosion had no prompt gamma-ray counterpart and shows how events evade traditional gamma-ray triggers.",
             ),
+            (
+                "typeii-supernova-surrogates",
+                "We performed radiation hydrodynamic modelling of this short-plateau SN IIP with MESA+STELLA and calculated its light curves.",
+            ),
         ]
         for contribution_id, text in cases:
             with self.subTest(contribution_id=contribution_id, text=text):
