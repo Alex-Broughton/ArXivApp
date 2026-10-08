@@ -476,7 +476,7 @@ def build_import_bundle(
     return {
         "schema_version": "1.0",
         "source": {
-            "kind": "paper", "source_system": "nsarxivapp.citation-opportunity-group",
+            "kind": "paper", "source_system": "arxivapp.citation-opportunity-group",
             "external_id": f"arxiv:{paper_id}:{group_id}", "title": paper.get("title", paper_id),
             "author": _bounded_author_summary(paper.get("authors", [])), "permalink": f"https://arxiv.org/abs/{paper_id}",
             "trust": "external_untrusted",

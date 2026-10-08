@@ -5,7 +5,7 @@ from app.arxiv_client import ArxivClient
 
 class ArxivClientMetadataTests(unittest.TestCase):
     def setUp(self):
-        self.client = ArxivClient(download_dir="/tmp/nsarxivapp-test-papers")
+        self.client = ArxivClient(download_dir="/tmp/arxivapp-test-papers")
 
     def test_extracts_current_two_cell_metadata(self):
         html = """

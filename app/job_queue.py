@@ -156,7 +156,7 @@ def start(*, recover: bool = False) -> None:
         if needs_start and recover:
             recover_interrupted()
         if needs_start:
-            _THREAD = threading.Thread(target=_worker, name="nsarxiv-jobs", daemon=True)
+            _THREAD = threading.Thread(target=_worker, name="arxivapp-jobs", daemon=True)
             _THREAD.start()
 
 

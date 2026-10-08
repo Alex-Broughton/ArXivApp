@@ -13,7 +13,7 @@ from pathlib import Path
 import requests
 
 EPRINT_URL = "https://arxiv.org/e-print"
-USER_AGENT = "NSArxivApp/1.0 (+https://github.com/nikhil-sarin/NSArxivApp)"
+USER_AGENT = "ArXivApp/1.0 (+https://github.com/Alex-Broughton/ArXivApp)"
 _WEB_EXTENSIONS = {".png", ".jpg", ".jpeg"}
 _GS_CONVERTIBLE_EXTENSIONS = {".pdf", ".eps", ".ps"}
 _ALL_FIG_EXTENSIONS = _WEB_EXTENSIONS | _GS_CONVERTIBLE_EXTENSIONS

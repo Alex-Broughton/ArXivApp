@@ -1,4 +1,4 @@
-# NSArxivApp - ArXiv Paper Wiki
+# ArXivApp - ArXiv Paper Wiki
 
 A full-stack application to discover, summarize, and explore connections between ArXiv research papers. Build a personal knowledge base of academic papers with semantic search, visual connections, and an AI chat interface.
 
@@ -27,8 +27,8 @@ A full-stack application to discover, summarize, and explore connections between
 ### Quick Start
 
 ```bash
-git clone git@github.com:nikhil-sarin/NSArxivApp.git
-cd NSArxivApp
+git clone git@github.com:Alex-Broughton/ArXivApp.git
+cd ArXivApp
 pip install -r requirements.txt
 ```
 
@@ -77,7 +77,17 @@ If you want this running continuously on a workstation:
    ./manage_app_tmux.sh stop
    ```
 
-The helper starts Streamlit on `127.0.0.1:8501` inside a tmux session named `nsarxiv-app`.
+The helper starts Streamlit on `127.0.0.1:8501` inside a tmux session named `arxiv-app`.
+
+### macOS Dock app
+
+Build a clickable launcher into `~/Applications` (requires `uv`):
+
+```bash
+macos/build_app.sh
+```
+
+Opening **ArXivApp** starts Streamlit on `127.0.0.1:8501` from the repository root and opens it in your browser; clicking it again reopens the page, and quitting it stops the server. Drag it to the Dock to keep it there. Logs go to `~/Library/Logs/ArXivApp.log`. Re-run the build script if you move the repository.
 
 ### Using conda/mamba
 
@@ -252,7 +262,7 @@ python -m app.fetch_job \
 
 Add to your crontab (`crontab -e`):
 ```
-0 7 * * * cd /path/to/NSArxivApp && /path/to/python -m app.fetch_job --mode new-submissions --categories astro-ph.HE astro-ph.SR astro-ph.CO astro-ph.GA astro-ph.IM gr-qc --max-results 0 --days-back 1 >> /path/to/NSArxivApp/data/fetch.log 2>&1
+0 7 * * * cd /path/to/ArXivApp && /path/to/python -m app.fetch_job --mode new-submissions --categories astro-ph.HE astro-ph.SR astro-ph.CO astro-ph.GA astro-ph.IM gr-qc --max-results 0 --days-back 1 >> /path/to/ArXivApp/data/fetch.log 2>&1
 ```
 
 The **Schedule** tab can also install a managed Linux cron entry for you directly.
@@ -314,9 +324,9 @@ Imports always enter `proposed` state. The app does not execute an action, and a
 
 ### Citation-opportunity workflow (optional)
 
-`config/contributions.example.json` contains the validated catalogue schema and verified Redback citation metadata. Copy it to the ignored `config/contributions.json` to customize private scope notes, or point `NSARXIV_CONTRIBUTIONS_PATH` at another file. Disabled entries are never analysed.
+`config/contributions.example.json` contains the validated catalogue schema and verified Redback citation metadata. Copy it to the ignored `config/contributions.json` to customize private scope notes, or point `ARXIVAPP_CONTRIBUTIONS_PATH` at another file. Disabled entries are never analysed.
 
-NSArxivApp does not require LocalOrchestrator. Public and standalone installations leave this personal workflow disabled, do not display its workspace, and make no LocalOrchestrator requests. Enable automatic checks explicitly with:
+ArXivApp does not require LocalOrchestrator. Public and standalone installations leave this personal workflow disabled, do not display its workspace, and make no LocalOrchestrator requests. Enable automatic checks explicitly with:
 
 ```env
 AUTO_CITATION_DISCOVERY=true
@@ -331,7 +341,7 @@ Backfill a bounded recent slice after expanding the catalogue:
 python -m app.citation_backfill --days 90 --max-papers 100
 ```
 
-LocalOrchestrator handoff is a separate opt-in integration. Set `LOCAL_ORCHESTRATOR_URL` to display the Email drafts controls; `LOCAL_ORCHESTRATOR_UI_URL` and `LOCAL_ORCHESTRATOR_API_TOKEN` are optional deployment settings. Handoff posts a stable, bounded ImportBundle containing quotes and catalogue metadata, never full paper text or secrets. Without these variables, all citation review and editing remains inside NSArxivApp. Neither app sends email.
+LocalOrchestrator handoff is a separate opt-in integration. Set `LOCAL_ORCHESTRATOR_URL` to display the Email drafts controls; `LOCAL_ORCHESTRATOR_UI_URL` and `LOCAL_ORCHESTRATOR_API_TOKEN` are optional deployment settings. Handoff posts a stable, bounded ImportBundle containing quotes and catalogue metadata, never full paper text or secrets. Without these variables, all citation review and editing remains inside ArXivApp. Neither app sends email.
 
 ---
 

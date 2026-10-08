@@ -2,8 +2,8 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-SESSION_NAME="${SESSION_NAME:-nsarxiv-app}"
-ENV_NAME="${ENV_NAME:-nsarxiv-app}"
+SESSION_NAME="${SESSION_NAME:-arxiv-app}"
+ENV_NAME="${ENV_NAME:-arxiv-app}"
 CONDA_SH="${CONDA_SH:-$HOME/miniconda3/etc/profile.d/conda.sh}"
 PORT="${PORT:-8501}"
 

@@ -16,7 +16,7 @@ CATCHUP_URL = "https://arxiv.org/catchup/{list_name}/{date}"
 OAI_URL = "https://oaipmh.arxiv.org/oai"
 RATE_LIMIT_SECONDS = 3.0
 MAX_RETRIES = 4
-USER_AGENT = "NSArxivApp/1.0 (+https://github.com/nikhil-sarin/NSArxivApp)"
+USER_AGENT = "ArXivApp/1.0 (+https://github.com/Alex-Broughton/ArXivApp)"
 
 NS = {
     "oai": "http://www.openarchives.org/OAI/2.0/",

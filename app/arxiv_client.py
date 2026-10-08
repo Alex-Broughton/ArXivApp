@@ -44,7 +44,7 @@ class ArxivClient:
     PDF_CHUNK_SIZE = 1024 * 1024
     PDF_DOWNLOAD_ATTEMPTS = 3
     REQUEST_TIMEOUT = (10, 120)
-    USER_AGENT = "NSArxivApp/1.0"
+    USER_AGENT = "ArXivApp/1.0"
     PDF_REQUEST_DELAY_SECONDS = 1.0
 
     def __init__(self, download_dir: str = "data/papers"):

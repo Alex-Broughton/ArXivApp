@@ -1541,8 +1541,8 @@ def render_papers_list():
     st.caption(f"Data: {data_dir}  |  PDFs: papers/  |  Vector DB: vector_db/  |  Metadata: papers.json")
 
 
-_CRON_BEGIN = "# BEGIN NSArxivApp managed fetch"
-_CRON_END = "# END NSArxivApp managed fetch"
+_CRON_BEGIN = "# BEGIN ArXivApp managed fetch"
+_CRON_END = "# END ArXivApp managed fetch"
 
 
 def _build_fetch_command(
@@ -1622,7 +1622,7 @@ def _install_cron_job(cron_line: str) -> tuple[bool, str]:
 
     if installed.returncode != 0:
         return False, installed.stderr.strip() or installed.stdout.strip() or "Could not install cron job."
-    return True, "Installed managed NSArxivApp cron job."
+    return True, "Installed managed ArXivApp cron job."
 
 
 def _run_fetch_command(fetch_cmd: str, log_path: Path) -> tuple[bool, str]:
@@ -1748,7 +1748,7 @@ def render_schedule():
                 else:
                     st.error(message)
 
-        plist_label = "com.nsarxivapp.dailyfetch"
+        plist_label = "com.arxivapp.dailyfetch"
         plist = textwrap.dedent(f"""\
             <?xml version="1.0" encoding="UTF-8"?>
             <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
@@ -2981,7 +2981,7 @@ def render_projects():
             action_details = st.text_area("Payload or instructions")
             if st.form_submit_button("Propose action") and action_title.strip():
                 action_contract.propose(
-                    "nsarxiv-app",
+                    "arxiv-app",
                     action_type,
                     action_title,
                     {"instructions": action_details},

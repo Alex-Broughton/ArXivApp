@@ -64,7 +64,9 @@ def validate(data: dict) -> dict:
 
 
 def configured_path() -> Path:
-    return Path(os.getenv("NSARXIV_CONTRIBUTIONS_PATH", str(DEFAULT_PATH))).expanduser()
+    # NSARXIV_CONTRIBUTIONS_PATH is the pre-rename name, still honoured.
+    raw = os.getenv("ARXIVAPP_CONTRIBUTIONS_PATH") or os.getenv("NSARXIV_CONTRIBUTIONS_PATH")
+    return Path(raw or str(DEFAULT_PATH)).expanduser()
 
 
 def load(path: Path | None = None) -> dict:

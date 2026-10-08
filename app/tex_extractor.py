@@ -74,7 +74,7 @@ def fetch_html_text(arxiv_id: str, cache_dir: Path) -> Optional[str]:
     try:
         resp = requests.get(
             url, timeout=30,
-            headers={"User-Agent": "NSArxivApp/1.0"},
+            headers={"User-Agent": "ArXivApp/1.0"},
             allow_redirects=True,
         )
         if resp.status_code != 200:

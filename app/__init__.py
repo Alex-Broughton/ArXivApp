@@ -1,1 +1,1 @@
-"""NSArxivApp - Arxiv Paper Wiki Application"""
+"""ArXivApp - Arxiv Paper Wiki Application"""

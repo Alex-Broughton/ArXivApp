@@ -98,7 +98,7 @@ def fetch_arxiv_contact(arxiv_id: str, *, timeout: int = 60) -> dict | None:
     clean_id = re.sub(r"v\d+$", "", arxiv_id.strip())
     response = requests.get(
         f"https://export.arxiv.org/e-print/{clean_id}",
-        headers={"User-Agent": "NSArxivApp/1.0"},
+        headers={"User-Agent": "ArXivApp/1.0"},
         timeout=timeout,
     )
     response.raise_for_status()

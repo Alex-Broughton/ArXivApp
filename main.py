@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Main entry point for NSArxivApp."""
+"""Main entry point for ArXivApp."""
 
 import streamlit as st
 
